@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 const title = ref('Vue.js Course')
 let num = ref(1)
 const info = ref({
@@ -30,6 +30,23 @@ function increment() {
   num.value += 1
   console.log(num.value)
 }
+
+const message = ref("<h1>Hello</h1>")
+const vueURL = ref('https://vuejs.org')
+const vueId = ref('vue-link')
+const count = ref(0)
+const eventName = "keyup"
+
+const countUp = (event, times) => {
+  count.value = event.clientX * times
+}
+
+const userInput = ref('')
+
+const score = ref(0)
+const evaluation = computed(() => 
+  score.value > 3 ? 'Good' : 'Bad'
+)
 </script>
 
 <template>
@@ -38,6 +55,38 @@ function increment() {
   <button @click="increment">button</button>
   <h2>{{ info.students }}</h2>
   <h2>Course Info Sections : {{ courseInfo.sections.value + 1 }}</h2>
+
+  <div v-text="num"></div>
+  <div>{{ num }}</div>
+
+  <div v-html="message"></div>
+  <div>{{ message }}</div>
+
+  <a href="https://vuejs.org">Vue.js</a><br>
+  <a v-bind:id="vueId" v-bind:href="vueURL">Vue.js</a><br>
+  <a :id="vueId" :href="vueURL">Vue.js</a><br>
+  <a v-bind="{id:vueId, href:vueURL}">Vue.js</a><br>
+
+  <p>{{ count }}</p>
+  <!-- <button v-on:click="count = $event.clientX">button</button> -->
+  <button @click="countUp($event, 5)">button</button><br>
+
+  <button @click="$event.preventDefault()">button</button><br>
+  <a :id="vueId" :href="vueURL" @click="$event.preventDefault()">Vue.js</a><br>
+  <a :id="vueId" :href="vueURL" @click.prevent>Vue.js</a><br>
+
+  <p> {{ count }}</p>
+  <input type="text" @keyup.space.delete="count++" />
+  <input type="text" @[eventName].space.delete="count++" />
+
+  <p> {{ userInput }} </p>
+  <input v-model="userInput" type="text" />
+
+  <p>{{ score }}</p>
+  <p>{{ evaluation }}</p>
+  <p>{{ score > 3 ? 'Good' : 'Bad' }}</p>
+  <button @click="score++">+1</button>
+
 </template>
 
 <style>

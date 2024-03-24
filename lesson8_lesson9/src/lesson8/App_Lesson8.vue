@@ -1,6 +1,6 @@
 <script setup>
 import {ref, onMounted} from 'vue'
-import CountUp from './components/CountUp.vue'
+import CountUp from './CountUp.vue'
 
 const isShow = ref(true)
 const userInput = ref(null)

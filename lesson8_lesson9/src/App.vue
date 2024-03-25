@@ -1,11 +1,21 @@
 <script setup>
-import { ref, shallowRef } from 'vue'
+import { defineAsyncComponent, ref, shallowRef } from 'vue'
 import BaseCard from './lesson9/BaseCard.vue'
 import CompA from './lesson9/CompA.vue'
-import CompB from './lesson9/CompB.vue'
+// import CompB from './lesson9/CompB.vue'
+import BaseLoader from "./lesson9/BaseLoader.vue"
+import ErrorMessage from "./lesson9/ErrorMessage.vue"
+const CompB = defineAsyncComponent({
+  loader: () => import('././lesson9/CompB.vue'),
+  loadingComponent: BaseLoader,
+  delay: 200,
+  errorComponent: ErrorMessage,
+  timeout: 2000
+})
 import CompC from './lesson9/CompC.vue'
 
 const currentComp = shallowRef(CompA)
+const isShow = ref(false)
 
 </script>
 
@@ -34,7 +44,16 @@ const currentComp = shallowRef(CompA)
     <button @click="currentComp = CompA">A</button>
     <button @click="currentComp = CompB">B</button>
     <button @click="currentComp = CompC">C</button>
-    <component :is="currentComp" />
+    <KeepAlive include="CompB,CompC" exclude="CompA" :max="3">
+      <component :is="currentComp" />
+    </KeepAlive>
+    <button @click="isShow = true">Open Modal</button>
+    <Teleport to="body">
+      <dialog v-if="isShow" open>
+        <p>This is a Modal</p>
+        <button @click="isShow = false">Close</button>
+      </dialog>
+    </Teleport>
   </div>
 </template>
 

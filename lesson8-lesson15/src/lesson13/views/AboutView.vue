@@ -3,8 +3,7 @@
 </script>
 
 <template>
-  <h1>VueRouter</h1>
-  <RouterView />
+  <h2>About</h2>
 </template>
 
 <style scoped>

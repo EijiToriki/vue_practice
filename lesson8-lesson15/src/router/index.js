@@ -30,7 +30,11 @@ const router = createRouter({
     {
       path: '/blog/:blog_id(\\d+)',
       name: 'blog',
-      component: BlogView
+      component: BlogView,
+      beforeEnter(to, from){
+        console.log('beforeEnter', to, from)
+        return '/'
+      }
     },
     {
       path: '/:catchAll(.*)*',
@@ -54,7 +58,25 @@ const router = createRouter({
         }
       ]
     },
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition){
+    if(savedPosition){
+      return savedPosition
+    }
+    if(to.hash){
+      return {
+        el: to.hash,
+        top: 20
+      }
+    }
+    return { top: 0, left: 0 }
+  }
+})
+
+router.beforeEach(async (to, from) => {
+  // await new Promise((resolve) => setTimeout(resolve, 2000))
+  console.log(to, from)  
+  // if(to.name === 'blog')  return false
 })
 
 export default router

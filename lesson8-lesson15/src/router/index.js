@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../lesson13/views/HomeView.vue'
+// import HomeView from '../lesson13/views/HomeView.vue'
+const HomeView = () => import('../lesson13/views/HomeView.vue')
 import AboutView from '../lesson13/views/AboutView.vue'
 import BlogView from '@/lesson13/views/BlogView.vue'
 import NotFound from '@/lesson13/views/NotFound.vue'
@@ -15,6 +16,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
+      meta: {hello: 'hello'},
       components: {
         default: HomeView,
         Sidebar: NewsView,
@@ -31,9 +33,10 @@ const router = createRouter({
       path: '/blog/:blog_id(\\d+)',
       name: 'blog',
       component: BlogView,
+      meta: {requiredAuth: true, transition: 'fade'},
       beforeEnter(to, from){
         console.log('beforeEnter', to, from)
-        return '/'
+        // return '/'
       }
     },
     {
@@ -77,6 +80,15 @@ router.beforeEach(async (to, from) => {
   // await new Promise((resolve) => setTimeout(resolve, 2000))
   console.log(to, from)  
   // if(to.name === 'blog')  return false
+  // if(to.meta.requiredAuth && isLogin) return '/'
+})
+
+router.beforeResolve(() => {
+  console.log("beforeResolve")
+})
+
+router.afterEach(() => {
+  console.log("afterEach")
 })
 
 export default router

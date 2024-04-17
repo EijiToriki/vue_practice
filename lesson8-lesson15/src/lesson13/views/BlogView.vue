@@ -1,6 +1,16 @@
 <script setup>
 import { watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { onBeforeRouteUpdate, onBeforeRouteLeave } from 'vue-router';
+
+onBeforeRouteUpdate(() => {
+  console.log('onBeforeRouteUpdate')
+})
+
+onBeforeRouteLeave(() => {
+  console.log('onBeforeRouteLeave')
+  return window.confirm('本当にこのページから離れますか？')
+})
 
 const route = useRoute()
 console.log(route.params)

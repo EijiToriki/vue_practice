@@ -19,7 +19,7 @@ const toAbout = () => {
   <button @click="toAbout">About</button>
 
   <RouterView v-slot="{ Component, route }">
-    <Transition name="fade" >
+    <Transition :name="route.meta.transition" mode="out-in">
       <component :is="Component" :key="route.path" />
     </Transition>
   </RouterView>

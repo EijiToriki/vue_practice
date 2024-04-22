@@ -35,7 +35,7 @@ const router = createRouter({
       component: BlogView,
       meta: {requiredAuth: true, transition: 'fade'},
       beforeEnter(to, from){
-        console.log('beforeEnter', to, from)
+        // console.log('beforeEnter', to, from)
         // return '/'
       }
     },
@@ -78,17 +78,17 @@ const router = createRouter({
 
 router.beforeEach(async (to, from) => {
   // await new Promise((resolve) => setTimeout(resolve, 2000))
-  console.log(to, from)  
+  // console.log(to, from)  
   // if(to.name === 'blog')  return false
   // if(to.meta.requiredAuth && isLogin) return '/'
 })
 
 router.beforeResolve(() => {
-  console.log("beforeResolve")
+  // console.log("beforeResolve")
 })
 
 router.afterEach(() => {
-  console.log("afterEach")
+  // console.log("afterEach")
 })
 
 export default router
